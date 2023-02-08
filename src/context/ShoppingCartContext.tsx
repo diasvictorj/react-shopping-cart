@@ -18,6 +18,7 @@ type ShoppingCartContext = {
   cartQuantity: number;
   cartItems: CartItem[];
   data: dataProps[];
+  isLoading: boolean;
 };
 type CartItem = {
   id: string;
@@ -39,11 +40,7 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [data, setData] = useState<dataProps[]>([]);
-
-  /*  const client = axios.create({
-    baseURL: "https://api.mercadolibre.com/sites/MLB/search?q=computador",
-  }); */
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     axios
       .get("https://api.mercadolibre.com/sites/MLB/search?q=computador")
@@ -65,6 +62,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         );
         setData(toState);
       })
+      .then(() => setIsLoading(false))
       .catch((err) => {
         console.log(err);
       });
@@ -137,6 +135,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         openCart,
         closeCart,
         data,
+        isLoading,
       }}
     >
       {children}

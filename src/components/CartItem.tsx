@@ -15,8 +15,7 @@ type dataProps = {
   imgUrl: string;
 };
 function CartItem({ id, quantity }: CartItemProps) {
-  const { removeFromCart } = useShoppingCart();
-  const data: dataProps[] = dataFetch();
+  const { removeFromCart, data } = useShoppingCart();
 
   const item = data.find((item) => item.id === id);
 
