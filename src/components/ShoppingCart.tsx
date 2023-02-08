@@ -2,14 +2,32 @@ import { Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { formateCurrency } from "../utilities/formatCurrency";
 import CartItem from "./CartItem";
-import storeItems from "../data/items.json";
+import dataFetch from "../hooks/dataFetch";
 
 type ShoppingCartProps = {
   isOpen: boolean;
 };
 
+type dataProps = {
+  id: string;
+  name: string;
+  price: number;
+  imgUrl: string;
+};
+
 export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
   const { closeCart, cartItems } = useShoppingCart();
+
+  /*   useEffect(() => {
+    const totalValue: number = cartItems.reduce((total, cartItem) => {
+      const item = data.find((item) => item.id === cartItem.id);
+      return total + (item?.price || 0) * cartItem.quantity;
+    }, 0);
+    console.log("Dibre", totalValue);
+  }, [cartItems]); */
+
+  const data: dataProps[] = dataFetch();
+
   return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
       <Offcanvas.Header closeButton>
@@ -25,7 +43,7 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
             Total: {""}
             {formateCurrency(
               cartItems.reduce((total, cartItem) => {
-                const item = storeItems.find((item) => item.id === cartItem.id);
+                const item = data.find((item) => item.id === cartItem.id);
                 return total + (item?.price || 0) * cartItem.quantity;
               }, 0)
             )}

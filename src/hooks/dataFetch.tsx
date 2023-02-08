@@ -4,31 +4,34 @@ import axios from "axios";
 function dataFetch() {
   const [data, setData] = useState([]);
 
+  /*  const client = axios.create({
+    baseURL: "https://api.mercadolibre.com/sites/MLB/search?q=computador",
+  }); */
+
   useEffect(() => {
-    if (data)
-      return void axios
-        .get("https://api.mercadolibre.com/sites/MLB/search?q=computador")
-        .then((res) => {
-          const toState = res.data.results.map(
-            (e: {
-              id: string;
-              title: string;
-              price: number;
-              thumbnail: string;
-            }) => {
-              return {
-                id: e.id,
-                name: e.title,
-                price: e.price,
-                imgUrl: e.thumbnail,
-              };
-            }
-          );
-          setData(toState);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    axios
+      .get("https://api.mercadolibre.com/sites/MLB/search?q=computador")
+      .then((res) => {
+        const toState = res.data.results.map(
+          (e: {
+            id: string;
+            title: string;
+            price: number;
+            thumbnail: string;
+          }) => {
+            return {
+              id: e.id,
+              name: e.title,
+              price: e.price,
+              imgUrl: e.thumbnail,
+            };
+          }
+        );
+        setData(toState);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return data;
 }

@@ -1,14 +1,12 @@
 import { Col, Row } from "react-bootstrap";
-import storeItems from "../data/items.json";
 import { StoreItem } from "../components/StoreItem";
 import dataFetch from "../hooks/dataFetch";
-import { useEffect } from "react";
 
 type dataProps = {
   id: string;
-  title: string;
+  name: string;
   price: number;
-  thumbnail: string;
+  imgUrl: string;
 };
 
 export function Store() {

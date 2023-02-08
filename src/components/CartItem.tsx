@@ -1,18 +1,26 @@
 import { Button, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import storeItems from "../data/items.json";
+import dataFetch from "../hooks/dataFetch";
 import { formateCurrency } from "../utilities/formatCurrency";
 
 type CartItemProps = {
-  id: number;
+  id: string;
   quantity: number;
+};
+type dataProps = {
+  id: string;
+  name: string;
+  price: number;
+  imgUrl: string;
 };
 function CartItem({ id, quantity }: CartItemProps) {
   const { removeFromCart } = useShoppingCart();
-  const item = storeItems.find((item) => item.id === id);
+  const data: dataProps[] = dataFetch();
+
+  const item = data.find((item) => item.id === id);
 
   if (item == null) return null;
-
   return (
     <Stack className="d-flex align-items-center" direction="horizontal" gap={2}>
       <img
