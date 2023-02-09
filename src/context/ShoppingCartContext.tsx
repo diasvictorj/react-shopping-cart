@@ -65,6 +65,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       .then(() => setIsLoading(false))
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
